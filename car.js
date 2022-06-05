@@ -19,7 +19,11 @@ class Car{
 
     damaged = false;
     lifetime = 0.00000000;
-    tavelDistance = 0.00000000;
+    linearTavelDistance = 0.00000000;
+
+    outputsCtrl;
+    mustSave = true;
+    storage = "traficUpdate";
 
 
     static getBaseWidth() {
@@ -49,7 +53,7 @@ class Car{
         obj.startTime = car.startTime;
         obj.endTime = car.endTime;
         obj.lifetime = car.lifetime;
-        obj.tavelDistance = car.tavelDistance;
+        obj.linearTavelDistance = car.linearTavelDistance;
 
 
         obj.speed=car.speed;
@@ -61,10 +65,16 @@ class Car{
         obj.controlType = car.controlType
 
         // parsed unatural
-        obj.sensor = new Object();
-        obj.sensor.rayCount = car.sensor.rayCount;
-        obj.sensor.rayLength = car.sensor.rayLength;
-        obj.sensor.raySpread = car.sensor.raySpread;
+
+        if(car.controlType != "DUMMY"){
+            obj.sensor = new Object();
+            obj.sensor.rayCount = car.sensor.rayCount;
+            obj.sensor.rayLength = car.sensor.rayLength;
+            obj.sensor.raySpread = car.sensor.raySpread;
+        }
+
+        obj.storage = car.storage;
+        obj.outputsCtrl = car.outputsCtrl;
 
         return JSON.stringify(obj);
     }
@@ -81,7 +91,9 @@ class Car{
         this.controlType = controlType;
         this.useBrain=this.controlType=="AI";
 
-        if(controlType!="DUMMY"){
+
+        if(this.controlType!="DUMMY"){
+            this.storage = "aiUpdate";
             this.sensor=new Sensor(this);
             this.brain=new NeuralNetwork(
                 [this.sensor.rayCount,6,4]
@@ -106,6 +118,17 @@ class Car{
             maskCtx.drawImage(this.img,0,0,this.width,this.height);
         }
         this.startTime = Date.now();
+
+        this.index = this.indexToStorage();
+    }
+
+    indexToStorage() {
+        const storage = this.getStorageObj();
+        storage.count++;
+        newStore  = {"count" : index+1,"cars": cars};
+
+        this.setStorageObj(newStore);
+        return index-1;
     }
 
     update(roadBorders,traffic){
@@ -119,7 +142,8 @@ class Car{
             const offsets=this.sensor.readings.map(
                 s=>s==null?0:1-s.offset
             );
-            const outputs=NeuralNetwork.feedForward(offsets,this.brain);
+            this.outputsCtrl=NeuralNetwork.feedForward(offsets,this.brain);
+            const outputs = this.outputsCtrl;
 
             if(this.useBrain){
                 this.controls.forward=outputs[0];
@@ -128,6 +152,30 @@ class Car{
                 this.controls.reverse=outputs[3];
             }
         }
+
+        this.checkMustsave();
+    }
+
+    getStorageObj() {
+        return JSON.parse(localStorage.getItem(this.storage));
+    }
+
+    setStorageObj(obj) {
+        localStorage.setItem(this.storage, JSON,stringify(obj));
+    }
+
+    checkMustsave() {
+        if(this.mustSave) {
+            const storage = this.getStorageObj();
+            if(storage) {
+                let state = storage.cars[this.index];
+                state = Car.toJson(this);
+
+                storage[this.index] = state;
+                this.setStorageObj(storage);
+            }
+        }
+        this.mustSave = false;
     }
 
     gotDamaged() {

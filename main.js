@@ -9,8 +9,13 @@ const networkCtx = networkCanvas.getContext("2d");
 
 const road=new Road(carCanvas.width/2,carCanvas.width*0.9);
 
-const N=100;
-const cars=generateCars(N);
+const NUMBEROFTRAFFIC=7;
+const NUMBEROFAI=100;
+
+localStorage.setItem("aiUpdate", JSON.stringify({"count":0,"cars":new Array(NUMBEROFAI)}));
+localStorage.setItem("traficUpdate", JSON.stringify({"count":0,"cars":new Array(NUMBEROFTRAFFIC)}));
+
+const cars=generateCars(NUMBEROFAI);
 let bestCar=cars[0];
 if(localStorage.getItem("bestBrain")){
     for(let i=0;i<cars.length;i++){
@@ -27,6 +32,7 @@ const carsDelta3 = Car.getBaseHeight()*2;
 const carsDelta5 = Car.getBaseHeight()*6;
 const carsDelta7 = Car.getBaseHeight()*9;
 const carsDelta8 = Car.getBaseHeight()*12;
+
 
 const traffic=[
     new Car(road.getLaneCenter(1),-carsDelta3,null,null,"DUMMY",2,getRandomColor()),
@@ -51,19 +57,27 @@ function save(id){
         Car.toJson(bestCar));
 }
 
+function saveAll(){
+    localStorage.setItem("bestBrain",
+        JSON.stringify(bestCar.brain));
+    localStorage.setItem("bestCar",
+        Car.toJson(bestCar));
+}
+
 function discard(){
     localStorage.removeItem("bestBrain");
 }
 
-function generateCars(N){
+function generateCars(NUMBEROF){
     const cars=[];
-    for(let i=1;i<=N;i++){
+    for(let i=1;i<=NUMBEROF;i++){
         const newCar = new Car(road.getLaneCenter(1),100,null,null,"AI");
-        newCar.index = i;
         cars.push(newCar);
     }
     return cars;
 }
+
+
 
 function animate(time){
     for(let i=0;i<traffic.length;i++){
@@ -101,5 +115,24 @@ function animate(time){
 
     networkCtx.lineDashOffset=-time/150;
     Visualizer.drawNetwork(networkCtx,bestCar.brain);
+
+    
+    updateLocalStorage();
     requestAnimationFrame(animate);
+}
+
+var oldTime = Date.now();
+function updateLocalStorage(sleepTime = 5000) {
+
+    if(Date.now() - oldTime >= sleepTime) {
+
+        cars.forEach(car => {
+            car.mustSave = true;
+        });
+        traffic.forEach(car => {
+            car.mustSave = true;
+        });
+        
+        oldTime = Date.now();
+    }
 }
