@@ -44,9 +44,11 @@ function reloadWindow() {
     window.location = window.location;
 }
 
-function save(){
+function save(id){
     localStorage.setItem("bestBrain",
         JSON.stringify(bestCar.brain));
+    localStorage.setItem("bestCar",
+        Car.toJson(bestCar));
 }
 
 function discard(){
@@ -56,7 +58,9 @@ function discard(){
 function generateCars(N){
     const cars=[];
     for(let i=1;i<=N;i++){
-        cars.push(new Car(road.getLaneCenter(1),100,null,null,"AI"));
+        const newCar = new Car(road.getLaneCenter(1),100,null,null,"AI");
+        newCar.index = i;
+        cars.push(newCar);
     }
     return cars;
 }

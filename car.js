@@ -1,4 +1,26 @@
 class Car{
+    startTime;
+    endTime;
+
+    x;y;sx;sy;
+    width;
+    height;
+
+    color;
+
+    
+    gen = -1;
+    index = -1;
+    speed = 0;
+    angle = 0;
+    maxSpeed;
+    acceleration = 0.2;
+    friction=0.05;
+
+    damaged = false;
+    lifetime = 0.00000000;
+    tavelDistance = 0.00000000;
+
 
     static getBaseWidth() {
         return carCanvas.width/2 *.45;
@@ -11,25 +33,53 @@ class Car{
     static getHWRatio() {
         return 50/30;
     }
+
+    static toJson(car) {
+        let obj = new Object();
+
+        obj.x=car.x;
+        obj.y=car.y;
+        obj.sx=car.sx;
+        obj.sy=car.sy;
+        obj.width=car.width;
+        obj.height=car.height;
+
+        obj.gen = car.gen;
+        obj.index = car.index;
+        obj.startTime = car.startTime;
+        obj.endTime = car.endTime;
+        obj.lifetime = car.lifetime;
+        obj.tavelDistance = car.tavelDistance;
+
+
+        obj.speed=car.speed;
+        obj.acceleration=car.acceleration;
+        obj.maxSpeed=car.maxSpeed;
+        obj.friction=car.friction;
+        obj.angle=car.angle;
+        obj.damaged=car.damaged;
+        obj.controlType = car.controlType
+
+        // parsed unatural
+        obj.sensor = new Object();
+        obj.sensor.rayCount = car.sensor.rayCount;
+        obj.sensor.rayLength = car.sensor.rayLength;
+        obj.sensor.raySpread = car.sensor.raySpread;
+
+        return JSON.stringify(obj);
+    }
     
     constructor(x,y,width,height,controlType,maxSpeed=3,color="blue"){
 
-        width = width || Car.getBaseWidth();
-        height = height || Car.getBaseHeight();
+        this.x=x; this.sx=x;
+        this.y=y; this.sy=y;
+
+        this.width = width || Car.getBaseWidth();
+        this.height= height || Car.getBaseHeight();
         
-        this.x=x;
-        this.y=y;
-        this.width=width;
-        this.height=height;
-
-        this.speed=0;
-        this.acceleration=0.2;
         this.maxSpeed=maxSpeed;
-        this.friction=0.05;
-        this.angle=0;
-        this.damaged=false;
-
-        this.useBrain=controlType=="AI";
+        this.controlType = controlType;
+        this.useBrain=this.controlType=="AI";
 
         if(controlType!="DUMMY"){
             this.sensor=new Sensor(this);
@@ -43,8 +93,8 @@ class Car{
         this.img.src="car.png"
 
         this.mask=document.createElement("canvas");
-        this.mask.width=width;
-        this.mask.height=height;
+        this.mask.width=this.width;
+        this.mask.height=this.height;
 
         const maskCtx=this.mask.getContext("2d");
         this.img.onload=()=>{
@@ -55,6 +105,7 @@ class Car{
             maskCtx.globalCompositeOperation="destination-atop";
             maskCtx.drawImage(this.img,0,0,this.width,this.height);
         }
+        this.startTime = Date.now();
     }
 
     update(roadBorders,traffic){
@@ -79,14 +130,22 @@ class Car{
         }
     }
 
+    gotDamaged() {
+        this.damaged = true;
+        this.endTime = Date.now().toPrecision();
+        this.lifetime = this.endTime - this.startTime.toPrecision();
+    }
+
     #assessDamage(roadBorders,traffic){
         for(let i=0;i<roadBorders.length;i++){
             if(polysIntersect(this.polygon,roadBorders[i])){
+                this.gotDamaged();
                 return true;
             }
         }
         for(let i=0;i<traffic.length;i++){
             if(polysIntersect(this.polygon,traffic[i].polygon)){
+                this.gotDamaged();
                 return true;
             }
         }
