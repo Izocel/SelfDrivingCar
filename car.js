@@ -11,6 +11,8 @@ class Car{
     
     gen = -1;
     index = -1;
+    position = -1;
+    
     speed = 0;
     angle = 0;
     maxSpeed;
@@ -54,6 +56,7 @@ class Car{
 
         obj.gen = car.gen;
         obj.index = car.index;
+        obj.position = car.position;
         obj.startTime = car.startTime;
         obj.endTime = car.endTime;
         obj.lifetime = car.lifetime;
@@ -69,7 +72,7 @@ class Car{
         obj.controlType = car.controlType
 
         // parsed unatural
-        if(car.controlType != "DUMMY"){
+        if(car.controlType == "AI"){
             obj.sensor = new Object();
             obj.sensor.rayCount = car.sensor.rayCount;
             obj.sensor.rayLength = car.sensor.rayLength;
@@ -122,7 +125,7 @@ class Car{
         }
         this.startTime = Date.now();
 
-        this.index = this.indexToStorage();
+        this.indexToStorage();
     }
 
     indexToStorage() {
@@ -130,7 +133,9 @@ class Car{
         storage.count++;
 
         this.setStorageObj(storage);
-        return storage.count-1;
+        this.index = storage.count-1;
+        this.position = this.index;
+        return this.index;
     }
 
     update(roadBorders,traffic){
@@ -182,7 +187,10 @@ class Car{
         if(this.mustSave) {
             const state = Car.getState(this);
             this.setSelfStoreState(state);
-            updateBestCarRow(null, this.index, state);
+
+            if(this.controlType == "AI" && this.position <= 5) {
+                updateBestCarRow(null, this.index, state);
+            }
             this.mustSave = false;
         }
     }

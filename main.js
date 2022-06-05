@@ -11,11 +11,13 @@ const road=new Road(carCanvas.width/2,carCanvas.width*0.9);
 
 const NUMBEROFTRAFFIC=7;
 const NUMBEROFAI=100;
+const LEADERBOARDLEN = 5;
 
 localStorage.setItem("aiUpdate", JSON.stringify({"count":0,"cars":new Array(NUMBEROFAI)}));
 localStorage.setItem("traficUpdate", JSON.stringify({"count":0,"cars":new Array(NUMBEROFTRAFFIC)}));
 
 const cars=generateCars(NUMBEROFAI);
+let bestCars = cars[0,4];
 let bestCar=cars[0];
 if(localStorage.getItem("bestBrain")){
     for(let i=0;i<cars.length;i++){
@@ -78,7 +80,6 @@ function generateCars(NUMBEROF){
 }
 
 
-
 function animate(time){
     for(let i=0;i<traffic.length;i++){
         traffic[i].update(road.borders,[]);
@@ -86,10 +87,22 @@ function animate(time){
     for(let i=0;i<cars.length;i++){
         cars[i].update(road.borders,traffic);
     }
-    bestCar=cars.find(
-        c=>c.y==Math.min(
-            ...cars.map(c=>c.y)
+
+    let found = 0;
+    let tempsCars = [...cars];
+
+    while(found !== Math.min(LEADERBOARDLEN, tempsCars.length)) {
+        bestCar = tempsCars.find(
+            c=>c.y==Math.min(
+                ...tempsCars.map(c=>c.y)
         ));
+        bestCars[found] = bestCar;
+        tempsCars.splice(bestCar.index, 1);
+        found++;
+    }
+    bestCar = bestCars[0];
+
+
     
     carCanvas.width=window.innerWidth/3;
     carCanvas.height=window.innerHeight;

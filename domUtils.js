@@ -11,14 +11,20 @@ function getBestCarRow(id) {
     return getBestCarsTable().querySelector("tbody tr#pos-"+id);
 }
 
-function updateBestCarRow(row, id) {
+function updateBestCarRow(row, id, state) {
     try {
         id = id || row?.id || null;
         row = row || getBestCarRow(id);
 
         if(!row) return;
 
-        //console.log(row);
+        const isActive =  !state.damaged;
+        const idx =  state.index;
+        const posNo =  state.position;
+        const x =  state.x;
+        const y =  state.y;
+        const ctrls =  state.outputsCtrl;
+
         
 
         
