@@ -117,22 +117,25 @@ function animate(time){
     Visualizer.drawNetwork(networkCtx,bestCar.brain);
 
     
-    updateLocalStorage();
+    updateLocals();
     requestAnimationFrame(animate);
 }
 
 var oldTime = Date.now();
-function updateLocalStorage(sleepTime = 5000) {
+function updateLocals(sleepTime = 500) {
 
     if(Date.now() - oldTime >= sleepTime) {
-
         cars.forEach(car => {
             car.mustSave = true;
         });
         traffic.forEach(car => {
             car.mustSave = true;
         });
-        
         oldTime = Date.now();
     }
 }
+
+
+$(function() {
+
+});

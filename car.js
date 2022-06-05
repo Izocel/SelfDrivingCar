@@ -38,6 +38,10 @@ class Car{
         return 50/30;
     }
 
+    static getState(car) {
+        return JSON.parse(Car.toJson(car));
+    }
+
     static toJson(car) {
         let obj = new Object();
 
@@ -65,7 +69,6 @@ class Car{
         obj.controlType = car.controlType
 
         // parsed unatural
-
         if(car.controlType != "DUMMY"){
             obj.sensor = new Object();
             obj.sensor.rayCount = car.sensor.rayCount;
@@ -125,10 +128,9 @@ class Car{
     indexToStorage() {
         const storage = this.getStorageObj();
         storage.count++;
-        newStore  = {"count" : index+1,"cars": cars};
 
-        this.setStorageObj(newStore);
-        return index-1;
+        this.setStorageObj(storage);
+        return storage.count-1;
     }
 
     update(roadBorders,traffic){
@@ -161,21 +163,28 @@ class Car{
     }
 
     setStorageObj(obj) {
-        localStorage.setItem(this.storage, JSON,stringify(obj));
+        localStorage.setItem(this.storage, JSON.stringify(obj));
+    }
+
+    getSelfStoreState() {
+        return this.getStorageObj().cars[this.index];
+    }
+
+    setSelfStoreState(obj) {
+        const storage = this.getStorageObj();
+        if(storage) {
+            storage.cars[this.index] = JSON.stringify(obj);
+        }
+        this.setStorageObj(storage);
     }
 
     checkMustsave() {
         if(this.mustSave) {
-            const storage = this.getStorageObj();
-            if(storage) {
-                let state = storage.cars[this.index];
-                state = Car.toJson(this);
-
-                storage[this.index] = state;
-                this.setStorageObj(storage);
-            }
+            const state = Car.getState(this);
+            this.setSelfStoreState(state);
+            updateBestCarRow(null, this.index, state);
+            this.mustSave = false;
         }
-        this.mustSave = false;
     }
 
     gotDamaged() {
