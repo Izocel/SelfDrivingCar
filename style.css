@@ -14,3 +14,22 @@ button:hover{
 #carCanvas{
     background:#607d8b;
 }
+
+table.table-hover tbody tr:hover{
+    color: rgb(0, 153, 255);
+    cursor:pointer;
+}
+
+td#ctrl-arrows span.active{
+    color: rgb(39, 226, 2);
+}
+
+td#avg-speed.over{
+    color: rgb(39, 226, 2);
+}
+
+td#avg-speed.under{
+    color: rgb(226, 80, 2);
+}
+
+

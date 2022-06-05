@@ -74,7 +74,7 @@
         
         <div class="row m-0 p-0">
             <div class="col m-0">
-                <div class="row">
+                <div id="top-controllers" class="row">
                     <div class="col">
                         <button onclick="save()"><b>SAVE</b>💾</button>
                         <button onclick="discard()"><b>DELETE.</b>🗑️</button>
@@ -85,17 +85,74 @@
                         <button disabled onclick="reloadWindow()"><b>REFRESH</b>🔄</button>
                     </div>
                 </div>
+                <div id="top-controllers-2" class="row">
+                    <div class="col">
+                        <button disabled onclick="reloadWindow()"><b>REFRESH</b>🔄</button>
+                        <button disabled onclick="reloadWindow()"><b>REFRESH</b>🔄</button>
+                        <button disabled onclick="reloadWindow()"><b>REFRESH</b>🔄</button>
+                        <button disabled onclick="reloadWindow()"><b>REFRESH</b>🔄</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row m-0 p-0">
+        <div id="tableForm-X" class="col bg-light m-2 p-0">
+            <table class="table table-sm table-striped table-bordered table-hover">
+                <thead class="thead bg-info text-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Brain no.</th>
+                    <th scope="col">Brain gen.</th>
+                    <th scope="col">Inputs ctrl.</th>
+                    <th scope="col">Speed</th>
+                    <th scope="col">Life Time</th>
+                    <th scope="col">Distance</th>
+                    <th scope="col">Avg. Speed</th>
+                    <th scope="col">Brain no.</th>
+                    <th scope="col">Brain no.</th>
+                    <th scope="col">Brain no.</th>
+                    <th scope="col">Brain no.</th>
+                    <th id="action-incons-header" scope="col">Actions 💾 🗑️ 📉 🔍</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td id="ctrl-arrows" scope="row">
+                        <span class="active">🠉</span>
+                        <span>🠈</span>
+                        <span>🠊</span>
+                        <span>🠋</span>
+                    </td>
+                    <td scope="row">250 km/h</td>
 
-            <canvas id="carCanvas"></canvas>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td>
+                        <button onclick="save()">💾</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
 
 
 
+        <div id="canvas" class="row m-0 p-0">
+            <canvas id="carCanvas" class="mr-2"></canvas>
             <canvas id="networkCanvas"></canvas>
-
         </div>
     </div>
 

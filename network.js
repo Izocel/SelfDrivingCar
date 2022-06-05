@@ -11,6 +11,7 @@ class NeuralNetwork{
     static feedForward(givenInputs,network){
         let outputs=Level.feedForward(
             givenInputs,network.levels[0]);
+
         for(let i=1;i<network.levels.length;i++){
             outputs=Level.feedForward(
                 outputs,network.levels[i]);
@@ -18,13 +19,13 @@ class NeuralNetwork{
         return outputs;
     }
 
-    static mutate(network,amount=1){
+    static mutate(network,biasPrct=1, weightPrct=1){
         network.levels.forEach(level => {
             for(let i=0;i<level.biases.length;i++){
                 level.biases[i]=lerp(
                     level.biases[i],
                     Math.random()*2-1,
-                    amount
+                    biasPrct
                 )
             }
             for(let i=0;i<level.weights.length;i++){
@@ -32,7 +33,7 @@ class NeuralNetwork{
                     level.weights[i][j]=lerp(
                         level.weights[i][j],
                         Math.random()*2-1,
-                        amount
+                        weightPrct
                     )
                 }
             }
