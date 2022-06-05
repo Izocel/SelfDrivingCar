@@ -1,17 +1,3 @@
-body{
-    margin:0;
-    background:#d2bcbc;
-    overflow:hidden;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-#verticalButtons{
-    display:flex;
-    flex-direction:column;
-}
-
 button{
     border: none;
     border-radius: 5px;

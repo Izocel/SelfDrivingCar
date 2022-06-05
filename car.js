@@ -1,5 +1,22 @@
 class Car{
+
+    static getBaseWidth() {
+        return carCanvas.width/2 *.45;
+    }
+
+    static getBaseHeight() {
+        return Car.getBaseWidth() * Car.getHWRatio();
+    }
+
+    static getHWRatio() {
+        return 50/30;
+    }
+    
     constructor(x,y,width,height,controlType,maxSpeed=3,color="blue"){
+
+        width = width || Car.getBaseWidth();
+        height = height || Car.getBaseHeight();
+        
         this.x=x;
         this.y=y;
         this.width=width;
