@@ -1,9 +1,9 @@
 body{
     margin:0;
-    background:darkgray;
+    background:#d2bcbc;
     overflow:hidden;
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
 }
 
@@ -15,7 +15,6 @@ body{
 button{
     border: none;
     border-radius: 5px;
-    padding: 5px 5px 7px 5px;
     margin: 2px;
     cursor:pointer;
 }
