@@ -100,23 +100,135 @@
             <table id="bestCarsTable" class="table table-sm table-striped table-bordered table-hover">
                 <thead class="thead bg-info text-light">
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Brain no.</th>
-                    <th scope="col">Brain gen.</th>
-                    <th scope="col">Inputs ctrl.</th>
-                    <th scope="col">Speed</th>
-                    <th scope="col">Life Time</th>
-                    <th scope="col">Distance</th>
-                    <th scope="col">Avg. Speed</th>
-                    <th scope="col">Brain no.</th>
-                    <th scope="col">Brain no.</th>
-                    <th scope="col">Brain no.</th>
-                    <th scope="col">Brain no.</th>
-                    <th id="action-incons-header" scope="col">Actions 💾 🗑️ 📉 🔍</th>
+                    <th id="position" scope="col">#</th>
+                    <th id="brainNo" scope="col">Brain no.</th>
+                    <th id="brainGen" scope="col">Brain gen.</th>
+                    <th id="ctrls" scope="col">Inputs ctrl.</th>
+                    <th id="speed" scope="col">Speed km/h.</th>
+                    <th id="lifetime" scope="col">Lifetime (ms.)</th>
+                    <th id="distance" scope="col">Distance</th>
+                    <th id="avgSpeed" scope="col">Avg. Speed</th>
+                    <th id="xx" scope="col">Brain no.</th>
+                    <th id="xxx" scope="col">Brain no.</th>
+                    <th id="xxxx" scope="col">Brain no.</th>
+                    <th id="xxxxx" scope="col">Brain no.</th>
+                    <th id="actions" scope="col">Actions 💾 🗑️ 📉 🔍</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr id="pos-1">
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td id="ctrl-arrows" scope="row">
+                        <span class="active">🠉</span>
+                        <span>🠈</span>
+                        <span>🠊</span>
+                        <span>🠋</span>
+                    </td>
+                    <td scope="row">250 km/h</td>
+
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td>
+                        <button onclick="save()">💾</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                    </td>
+                  </tr>
+                  <tr id="pos-2">
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td id="ctrl-arrows" scope="row">
+                        <span class="active">🠉</span>
+                        <span>🠈</span>
+                        <span>🠊</span>
+                        <span>🠋</span>
+                    </td>
+                    <td scope="row">250 km/h</td>
+
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td>
+                        <button onclick="save()">💾</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                    </td>
+                  </tr>
+                  <tr id="pos-3">
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td id="ctrl-arrows" scope="row">
+                        <span class="active">🠉</span>
+                        <span>🠈</span>
+                        <span>🠊</span>
+                        <span>🠋</span>
+                    </td>
+                    <td scope="row">250 km/h</td>
+
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td>
+                        <button onclick="save()">💾</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                    </td>
+                  </tr>
+                  <tr id="pos-4">
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td scope="row">1</td>
+                    <td id="ctrl-arrows" scope="row">
+                        <span class="active">🠉</span>
+                        <span>🠈</span>
+                        <span>🠊</span>
+                        <span>🠋</span>
+                    </td>
+                    <td scope="row">250 km/h</td>
+
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td scope="row">Mark</td>
+                    <td>
+                        <button onclick="save()">💾</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                        <button onclick="discard()">🗑️</button>
+                    </td>
+                  </tr>
+                  <tr id="pos-5">
                     <td scope="row">1</td>
                     <td scope="row">1</td>
                     <td scope="row">1</td>

@@ -9,7 +9,7 @@ class Car{
     color;
 
     
-    gen = -1;
+    gen = '∞';
     index = -1;
     position = -1;
     
@@ -20,7 +20,7 @@ class Car{
     friction=0.05;
 
     damaged = false;
-    lifetime = 0.00000000;
+    lifetime = '∞';
     linearTavelDistance = 0.00000000;
 
     outputsCtrl;
